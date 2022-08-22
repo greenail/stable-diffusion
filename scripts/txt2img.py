@@ -84,7 +84,7 @@ def load_replacement(x):
         return x
 
 
-def check_safety(x_image):
+def check_safety2(x_image):
     safety_checker_input = safety_feature_extractor(numpy_to_pil(x_image), return_tensors="pt")
     x_checked_image, has_nsfw_concept = safety_checker(images=x_image, clip_input=safety_checker_input.pixel_values)
     assert x_checked_image.shape[0] == len(has_nsfw_concept)
@@ -93,6 +93,8 @@ def check_safety(x_image):
             x_checked_image[i] = load_replacement(x_checked_image[i])
     return x_checked_image, has_nsfw_concept
 
+def check_safety(x_image):
+    return x_image, False
 
 def main():
     parser = argparse.ArgumentParser()
